@@ -3,6 +3,7 @@ package sandbox
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 )
 
 type myStruct struct {
@@ -31,5 +32,21 @@ func Marshaling() {
 	var unmarshInst myStruct
 
 	_ = json.Unmarshal(js, &unmarshInst)
+
+}
+
+func IO() {
+
+	f, err := os.OpenFile("../../tmp/123.txt", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0600)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	n, err := f.Write([]byte("writing some data into a file"))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("wrote %d bytes", n)
 
 }

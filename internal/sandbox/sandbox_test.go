@@ -7,3 +7,7 @@ import (
 func TestMarshaling(t *testing.T) {
 	Marshaling()
 }
+
+func TestIO(t *testing.T) {
+	IO()
+}
