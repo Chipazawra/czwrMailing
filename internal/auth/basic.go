@@ -1,44 +1,31 @@
 package auth
 
 import (
-	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func AddHandlers() {
-	http.HandleFunc("/login", BasicAuth)
-	http.HandleFunc("/logout", Logout)
+var whiteList = gin.Accounts{
+	"user1": "love",
+	"user2": "god",
+	"user3": "sex",
 }
 
-func BasicAuth(w http.ResponseWriter, r *http.Request) {
-
-	if usr, pwd, ok := r.BasicAuth(); !ok {
-
-		fmt.Fprint(w, "Error parsing basic auth")
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-
-	} else if usr != "14" || pwd != "88" {
-
-		fmt.Fprint(w, "Wrong login or password...")
-		w.WriteHeader(http.StatusUnauthorized)
-		return
-
-	} else {
-
-		accesCookie := &http.Cookie{
-			Name:   "access",
-			Value:  "token",
-			MaxAge: 300,
-		}
-		http.SetCookie(w, accesCookie)
-		fmt.Fprintf(w, "Hello, %v!", usr)
-		w.WriteHeader(401)
-		return
-
-	}
+func AddRoutes(r *gin.Engine) {
+	authorized := r.Group("/", gin.BasicAuth(whiteList))
+	authorized.GET("/login", BasicAuth)
+	authorized.GET("/logout", Logout)
 }
 
-func Logout(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Logout")
+func BasicAuth(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"secret": "The secret ingredient to the BBQ sauce is stiring it in an old whiskey barrel.",
+	})
+}
+
+func Logout(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"secret": "logout.",
+	})
 }
