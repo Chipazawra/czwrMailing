@@ -6,14 +6,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var whiteList = gin.Accounts{
-	"user1": "love",
-	"user2": "god",
-	"user3": "sex",
-}
-
-func AddRoutes(r *gin.Engine) {
-	authorized := r.Group("/", gin.BasicAuth(whiteList))
+func AddRoutes(r *gin.Engine, wl gin.Accounts) {
+	authorized := r.Group("/", gin.BasicAuth(wl))
 	authorized.GET("/login", BasicAuth)
 	authorized.GET("/logout", Logout)
 }

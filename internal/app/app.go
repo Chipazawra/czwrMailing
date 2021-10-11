@@ -1,6 +1,10 @@
 package app
 
 import (
+	"fmt"
+
+	"github.com/Chipazawra/czwrmailing/internal/config"
+
 	"github.com/Chipazawra/czwrmailing/internal/auth"
 	"github.com/Chipazawra/czwrmailing/internal/todo"
 	"github.com/gin-gonic/gin"
@@ -8,10 +12,20 @@ import (
 
 func Run() {
 	defer afterStart()
-	r := gin.Default()
-	auth.AddRoutes(r)
-	todo.AddRoutes(r)
-	if err := r.Run(); err != nil {
+
+	if config, err := config.LoadConf(); err == nil {
+
+		r := gin.Default()
+		auth.AddRoutes(r, gin.Accounts(config.Auth.WhiteList))
+		todo.AddRoutes(r)
+
+		err := r.Run(fmt.Sprintf("%v:%v", config.Server.Host, config.Server.Port))
+
+		if err != nil {
+			panic(err)
+		}
+
+	} else {
 		panic(err)
 	}
 }
