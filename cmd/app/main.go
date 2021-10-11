@@ -8,7 +8,14 @@ import (
 )
 
 func main() {
+	defer afterStart()
 	auth.AddHandlers()
 	todo.AddHandlers()
-	http.ListenAndServe(":8080", nil)
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		panic(err)
+	}
+}
+
+func afterStart() {
+	//TODO
 }
