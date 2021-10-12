@@ -26,11 +26,11 @@ func NewAuth(tm *jwtmng.Mng, c *AuthConf) *Auth {
 
 func (a *Auth) AddRoutes(r *gin.Engine) {
 	authorized := r.Group("/", gin.BasicAuth(a.config.Users))
-	authorized.GET("/login", a.BasicAuth)
-	authorized.GET("/logout", a.Logout)
+	authorized.GET("/login", a.login)
+	authorized.GET("/logout", a.logout)
 }
 
-func (a *Auth) BasicAuth(c *gin.Context) {
+func (a *Auth) login(c *gin.Context) {
 
 	token, _ := a.TokenManager.NewJWT("usr", time.Duration(a.config.JwtTTL))
 	refresh, _ := a.TokenManager.NewRefreshToken()
@@ -39,12 +39,12 @@ func (a *Auth) BasicAuth(c *gin.Context) {
 	c.SetCookie("refresh", refresh, 3600, "/", "localhost", false, true)
 
 	c.JSON(http.StatusOK, gin.H{
-		"secret": "set cookie.",
+		"status": "login.",
 	})
 }
 
-func (a *Auth) Logout(c *gin.Context) {
+func (a *Auth) logout(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
-		"secret": "logout.",
+		"status": "logout.",
 	})
 }
