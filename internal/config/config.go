@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/Chipazawra/czwrmailing/internal/auth"
 	"gopkg.in/yaml.v2"
 )
 
@@ -16,9 +17,7 @@ type Config struct {
 		// Port is the local machine TCP Port to bind the HTTP Server to
 		Port string `yaml:"port"`
 	}
-	Auth struct {
-		WhiteList map[string]string
-	}
+	auth.AuthConf
 }
 
 // NewConfig returns a new decoded Config struct

@@ -6,10 +6,20 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddRoutes(r *gin.Engine) {
-	r.GET("/todo", Pong)
+type ToDo struct {
 }
 
-func Pong(c *gin.Context) {
-	c.String(http.StatusOK, "Pong")
+type ToDoConf struct {
+}
+
+func NewToDO(c *ToDoConf) *ToDo {
+	return &ToDo{}
+}
+
+func (t *ToDo) AddRoutes(r *gin.Engine) {
+	r.GET("/todo", t.Pong)
+}
+
+func (t *ToDo) Pong(c *gin.Context) {
+	c.String(http.StatusOK, "todo")
 }
