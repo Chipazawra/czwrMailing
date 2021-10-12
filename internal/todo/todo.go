@@ -1,14 +1,25 @@
 package todo
 
 import (
-	"fmt"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func AddHandlers() {
-	http.HandleFunc("/todo", Pong)
+type ToDo struct {
 }
 
-func Pong(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "todo")
+type ToDoConf struct {
+}
+
+func NewToDO(c *ToDoConf) *ToDo {
+	return &ToDo{}
+}
+
+func (t *ToDo) AddRoutes(r *gin.Engine) {
+	r.GET("/todo", t.Pong)
+}
+
+func (t *ToDo) Pong(c *gin.Context) {
+	c.String(http.StatusOK, "todo")
 }
