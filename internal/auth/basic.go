@@ -35,8 +35,8 @@ func (a *Auth) login(c *gin.Context) {
 	token, _ := a.TokenManager.NewJWT("usr", time.Duration(a.config.JwtTTL))
 	refresh, _ := a.TokenManager.NewRefreshToken()
 
-	c.SetCookie("access", token, 60, "/", "localhost", false, true)
-	c.SetCookie("refresh", refresh, 3600, "/", "localhost", false, true)
+	c.SetCookie("access", token, a.config.JwtTTL, "/", "localhost", false, true)
+	c.SetCookie("refresh", refresh, a.config.RefreshTTL, "/", "localhost", false, true)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status": "login.",
