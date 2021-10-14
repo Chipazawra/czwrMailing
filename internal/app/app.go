@@ -6,6 +6,7 @@ import (
 	"github.com/Chipazawra/czwrmailing/internal/auth"
 	"github.com/Chipazawra/czwrmailing/internal/config"
 	"github.com/Chipazawra/czwrmailing/internal/jwtmng"
+	"github.com/Chipazawra/czwrmailing/internal/profile"
 	"github.com/Chipazawra/czwrmailing/internal/todo"
 	"github.com/gin-gonic/gin"
 )
@@ -22,8 +23,11 @@ func Run() {
 			panic(err)
 		}
 
-		authService := auth.NewAuth(tokenManager, &config.AuthConf)
-		authService.AddRoutes(r)
+		authSvc := auth.NewAuth(tokenManager, &config.AuthConf)
+		authSvc.AddRoutes(r)
+
+		profileSvc := profile.NewProfile(tokenManager)
+		profileSvc.AddRoutes(r)
 
 		todo := todo.NewToDO(nil)
 		todo.AddRoutes(r)

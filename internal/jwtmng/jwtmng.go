@@ -42,3 +42,26 @@ func (m *Mng) NewRefreshToken() (string, error) {
 
 	return fmt.Sprintf("%x", b), nil
 }
+
+func (m *Mng) ValidToken(val string) (jwt.Claims, error) {
+
+	token, err := jwt.Parse(val, func(t *jwt.Token) (interface{}, error) {
+
+		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
+		}
+
+		return []byte(m.signingKey), nil
+	})
+
+	return token.Claims, err
+}
+
+func (m *Mng) ParseToken(val string) (jwt.Claims, error) {
+
+	token, err := jwt.ParseWithClaims(val, &jwt.StandardClaims{}, func(t *jwt.Token) (interface{}, error) {
+		return []byte(m.signingKey), nil
+	})
+
+	return token.Claims, err
+}
