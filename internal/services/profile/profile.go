@@ -3,7 +3,7 @@ package profile
 import (
 	"net/http"
 
-	"github.com/Chipazawra/czwrmailing/internal/jwtmng"
+	"github.com/Chipazawra/czwrmailing/pkg/jwtmng"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )

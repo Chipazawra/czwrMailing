@@ -1,6 +1,9 @@
 server:
   host: 127.0.0.1
   port: 8080
+  log: true
+  logtofile: true
+  logpath: .
 authconf:
   users:
    usr: pass

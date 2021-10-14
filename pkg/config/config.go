@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Chipazawra/czwrmailing/internal/auth"
+	"github.com/Chipazawra/czwrmailing/internal/services/auth"
 	"gopkg.in/yaml.v2"
 )
 
@@ -16,6 +16,12 @@ type Config struct {
 		Host string `yaml:"host"`
 		// Port is the local machine TCP Port to bind the HTTP Server to
 		Port string `yaml:"port"`
+		// true - enable logging, false - disble logging
+		Log bool `yaml:"log"`
+		// true - logging to file, false  - to stdOut
+		LogToFile bool `yaml:"logtofile"`
+		// if LogToFile = true, path to log file
+		LogPath string `yaml:"logpath"`
 	}
 	auth.AuthConf
 }

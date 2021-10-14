@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Chipazawra/czwrmailing/internal/jwtmng"
+	"github.com/Chipazawra/czwrmailing/pkg/jwtmng"
 	"github.com/gin-gonic/gin"
 )
 
