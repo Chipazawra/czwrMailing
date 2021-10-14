@@ -8,6 +8,7 @@ import (
 	"github.com/Chipazawra/czwrmailing/internal/jwtmng"
 	"github.com/Chipazawra/czwrmailing/internal/profile"
 	"github.com/Chipazawra/czwrmailing/internal/todo"
+	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 )
 
@@ -31,6 +32,8 @@ func Run() {
 
 		todo := todo.NewToDO(nil)
 		todo.AddRoutes(r)
+
+		pprof.Register(r, "dev/pprof")
 
 		err = r.Run(fmt.Sprintf("%v:%v", config.Server.Host, config.Server.Port))
 
