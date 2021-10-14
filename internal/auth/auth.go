@@ -27,7 +27,7 @@ func NewAuth(tm *jwtmng.Mng, c *AuthConf) *Auth {
 func (a *Auth) AddRoutes(r *gin.Engine) {
 	authorized := r.Group("/", gin.BasicAuth(a.config.Users))
 	authorized.GET("/login", a.loginHandler)
-	authorized.GET("/logout", a.logoutHandler)
+	r.GET("/logout", a.logoutHandler)
 }
 
 func (a *Auth) loginHandler(c *gin.Context) {
@@ -38,9 +38,16 @@ func (a *Auth) loginHandler(c *gin.Context) {
 	c.SetCookie("access", token, a.config.JwtTTL, "/", "localhost", false, true)
 	c.SetCookie("refresh", refresh, a.config.RefreshTTL, "/", "localhost", false, true)
 
-	c.JSON(http.StatusOK, gin.H{
-		"status": "login.",
-	})
+	rurl, rdct := c.GetQuery("redirect_uri")
+
+	if rdct {
+		c.Redirect(http.StatusPermanentRedirect, rurl)
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"status": "login.",
+		})
+	}
+
 }
 
 func (a *Auth) logoutHandler(c *gin.Context) {
@@ -48,7 +55,13 @@ func (a *Auth) logoutHandler(c *gin.Context) {
 	c.SetCookie("access", "", -1, "/", "localhost", false, true)
 	c.SetCookie("refresh", "", -1, "/", "localhost", false, true)
 
-	c.JSON(http.StatusOK, gin.H{
-		"status": "logout.",
-	})
+	rurl, rdct := c.GetQuery("redirect_uri")
+
+	if rdct {
+		c.Redirect(http.StatusPermanentRedirect, rurl)
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"status": "logout.",
+		})
+	}
 }
