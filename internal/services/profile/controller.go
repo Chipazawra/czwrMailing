@@ -3,18 +3,9 @@ package profile
 import (
 	"net/http"
 
-	"github.com/Chipazawra/czwrmailing/pkg/jwtmng"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 )
-
-type Profile struct {
-	TokenManager *jwtmng.Mng
-}
-
-func New(tm *jwtmng.Mng) *Profile {
-	return &Profile{TokenManager: tm}
-}
 
 func (p *Profile) Register(g *gin.Engine) {
 	gr := g.Group("/profile")

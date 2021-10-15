@@ -4,25 +4,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Chipazawra/czwrmailing/pkg/jwtmng"
 	"github.com/gin-gonic/gin"
 )
-
-type Auth struct {
-	TokenManager *jwtmng.Mng
-	config       AuthConf
-}
-
-type AuthConf struct {
-	Users      map[string]string `yaml:"users"`
-	JwtTTL     int               `yaml:"jwtttl"`
-	RefreshTTL int               `yaml:"refreshttl"`
-	Secret     string            `yaml:"secret"`
-}
-
-func New(tm *jwtmng.Mng, c *AuthConf) *Auth {
-	return &Auth{TokenManager: tm, config: *c}
-}
 
 func (a *Auth) Register(r *gin.Engine) {
 	authorized := r.Group("/", gin.BasicAuth(a.config.Users))
@@ -55,7 +38,6 @@ func (a *Auth) loginHandler(c *gin.Context) {
 			"status": "login.",
 		})
 	}
-
 }
 
 // logout godoc
