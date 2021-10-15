@@ -16,10 +16,10 @@ func New(tm *jwtmng.Mng) *Profile {
 	return &Profile{TokenManager: tm}
 }
 
-func (p *Profile) Register(r *gin.Engine) {
-	g := r.Group("/profile")
-	g.GET("/i", p.iHandler)
-	g.GET("/me", p.meHandler)
+func (p *Profile) Register(g *gin.Engine) {
+	gr := g.Group("/profile")
+	gr.GET("/i", p.iHandler)
+	gr.GET("/me", p.meHandler)
 }
 
 func (p *Profile) iHandler(c *gin.Context) {

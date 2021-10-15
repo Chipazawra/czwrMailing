@@ -10,7 +10,7 @@ import (
 	"github.com/Chipazawra/czwrmailing/internal/todo"
 	"github.com/Chipazawra/czwrmailing/pkg/config"
 	"github.com/Chipazawra/czwrmailing/pkg/jwtmng"
-	"github.com/gin-contrib/pprof"
+	"github.com/Chipazawra/czwrmailing/pkg/pprofwrapper"
 	"github.com/gin-gonic/gin"
 )
 
@@ -77,13 +77,12 @@ func Run() {
 		as := auth.New(tm, &conf.AuthConf)
 		ps := profile.New(tm)
 		ts := todo.New(nil)
+		pw := pprofwrapper.New()
 
 		as.Register(g)
 		ps.Register(g)
 		ts.Register(g)
-
-		//init profiling
-		pprof.Register(g, "debug/pprof")
+		pw.Register(g)
 
 		//run server
 		err = g.Run(fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port))
