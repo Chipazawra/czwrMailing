@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	_ "github.com/Chipazawra/czwrmailing/doc"
 	"github.com/Chipazawra/czwrmailing/internal/services/auth"
 	"github.com/Chipazawra/czwrmailing/internal/services/profile"
 	"github.com/Chipazawra/czwrmailing/internal/todo"
@@ -12,6 +13,8 @@ import (
 	"github.com/Chipazawra/czwrmailing/pkg/jwtmng"
 	"github.com/Chipazawra/czwrmailing/pkg/pprofwrapper"
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
 func logfmt(params gin.LogFormatterParams) string {
@@ -39,6 +42,9 @@ func logfmt(params gin.LogFormatterParams) string {
 	)
 }
 
+// @title czwrMailing service
+// @version 1.0
+// @description This is a sample mailing servivce.
 func Run() {
 
 	defer afterStart()
@@ -84,6 +90,8 @@ func Run() {
 		ts.Register(g)
 		pw.Register(g)
 
+		//swagger
+		g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		//run server
 		err = g.Run(fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port))
 

@@ -22,10 +22,26 @@ func (p *Profile) Register(g *gin.Engine) {
 	gr.GET("/me", p.meHandler)
 }
 
+// profile i godoc
+// @Summary show user info
+// @Tags profile
+// @Description get auth data
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /profile/i [get]
 func (p *Profile) iHandler(c *gin.Context) {
 	p.pHandler(c, p.TokenManager.ParseToken)
 }
 
+// profile me godoc
+// @Summary valid jwt token and show user info
+// @Tags profile
+// @Description get auth data
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /profile/me [get]
 func (p *Profile) meHandler(c *gin.Context) {
 	p.pHandler(c, p.TokenManager.ValidToken)
 }

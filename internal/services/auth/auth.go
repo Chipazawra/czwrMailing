@@ -30,6 +30,14 @@ func (a *Auth) Register(r *gin.Engine) {
 	r.GET("/logout", a.logoutHandler)
 }
 
+// login godoc
+// @Summary login in service
+// @Tags auth
+// @Description get auth data
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /login [get]
 func (a *Auth) loginHandler(c *gin.Context) {
 
 	token, _ := a.TokenManager.NewJWT("usr", time.Duration(a.config.JwtTTL))
@@ -50,6 +58,14 @@ func (a *Auth) loginHandler(c *gin.Context) {
 
 }
 
+// logout godoc
+// @Summary logout from service
+// @Tags auth
+// @Description clear auth data
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /logout [get]
 func (a *Auth) logoutHandler(c *gin.Context) {
 
 	c.SetCookie("access", "", -1, "/", "localhost", false, true)

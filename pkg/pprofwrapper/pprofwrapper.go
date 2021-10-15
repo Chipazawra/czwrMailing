@@ -23,6 +23,14 @@ func (pw *PprofWrapper) Register(g *gin.Engine) {
 	pprof.RouteRegister(gr, "/pprof")
 }
 
+// pprofwrapper godoc
+// @Summary enable pprof API
+// @Tags pprofwrapper
+// @Description enable pprof API on service
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /pprof_enable [post]
 func (pw *PprofWrapper) enableHandler(c *gin.Context) {
 	pw.PprofEnabled = true
 	c.JSON(
@@ -31,6 +39,14 @@ func (pw *PprofWrapper) enableHandler(c *gin.Context) {
 	)
 }
 
+// pprofwrapper godoc
+// @Summary disable pprof API
+// @Tags pprofwrapper
+// @Description disable pprof API on service
+// @Accept  json
+// @Produce  json
+// @Success 200
+// @Router /pprof_disable [post]
 func (pw *PprofWrapper) disableHandler(c *gin.Context) {
 	pw.PprofEnabled = false
 	c.JSON(
