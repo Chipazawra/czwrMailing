@@ -85,6 +85,7 @@ func Run() {
 		ts := todo.New(nil)
 		pw := pprofwrapper.New()
 
+		//register services
 		as.Register(g)
 		ps.Register(g)
 		ts.Register(g)
