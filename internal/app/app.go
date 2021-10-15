@@ -40,12 +40,14 @@ func logfmt(params gin.LogFormatterParams) string {
 }
 
 func Run() {
+
 	defer afterStart()
 
-	if conf, err := config.LoadConf(); err == nil {
-		// init engine
-		r := gin.New()
-		r.Use(gin.Recovery())
+	if conf, err := config.Load(); err == nil {
+
+		g := gin.New()
+		g.Use(gin.Recovery())
+
 		// init logger
 		if conf.Server.Log {
 
@@ -59,33 +61,32 @@ func Run() {
 				defer f.Close()
 			}
 
-			r.Use(gin.LoggerWithConfig(gin.LoggerConfig{
+			g.Use(gin.LoggerWithConfig(gin.LoggerConfig{
 				Formatter: logfmt,
 				Output:    os.Stdout,
 			}))
 		}
 
-		//init services
-		tokenManager, err := jwtmng.NewManager(conf.Secret)
+		tm, err := jwtmng.New(conf.Secret)
 
 		if err != nil {
 			panic(err)
 		}
 
-		authSvc := auth.NewAuth(tokenManager, &conf.AuthConf)
-		authSvc.AddRoutes(r)
+		//init services
+		as := auth.New(tm, &conf.AuthConf)
+		ps := profile.New(tm)
+		ts := todo.New(nil)
 
-		profileSvc := profile.NewProfile(tokenManager)
-		profileSvc.AddRoutes(r)
-
-		todo := todo.NewToDO(nil)
-		todo.AddRoutes(r)
+		as.Register(g)
+		ps.Register(g)
+		ts.Register(g)
 
 		//init profiling
-		pprof.Register(r, "debug/pprof")
+		pprof.Register(g, "debug/pprof")
 
 		//run server
-		err = r.Run(fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port))
+		err = g.Run(fmt.Sprintf("%v:%v", conf.Server.Host, conf.Server.Port))
 
 		if err != nil {
 			panic(err)

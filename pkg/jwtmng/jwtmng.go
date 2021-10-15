@@ -13,7 +13,7 @@ type Mng struct {
 	signingKey string
 }
 
-func NewManager(signingKey string) (*Mng, error) {
+func New(signingKey string) (*Mng, error) {
 	if signingKey == "" {
 		return nil, errors.New("empty signing key")
 	}

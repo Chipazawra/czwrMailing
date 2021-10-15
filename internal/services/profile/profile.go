@@ -12,11 +12,11 @@ type Profile struct {
 	TokenManager *jwtmng.Mng
 }
 
-func NewProfile(tm *jwtmng.Mng) *Profile {
+func New(tm *jwtmng.Mng) *Profile {
 	return &Profile{TokenManager: tm}
 }
 
-func (p *Profile) AddRoutes(r *gin.Engine) {
+func (p *Profile) Register(r *gin.Engine) {
 	g := r.Group("/profile")
 	g.GET("/i", p.iHandler)
 	g.GET("/me", p.meHandler)

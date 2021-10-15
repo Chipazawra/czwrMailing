@@ -12,11 +12,11 @@ type ToDo struct {
 type ToDoConf struct {
 }
 
-func NewToDO(c *ToDoConf) *ToDo {
+func New(c *ToDoConf) *ToDo {
 	return &ToDo{}
 }
 
-func (t *ToDo) AddRoutes(r *gin.Engine) {
+func (t *ToDo) Register(r *gin.Engine) {
 	r.GET("/todo", t.Pong)
 }
 

@@ -20,11 +20,11 @@ type AuthConf struct {
 	Secret     string            `yaml:"secret"`
 }
 
-func NewAuth(tm *jwtmng.Mng, c *AuthConf) *Auth {
+func New(tm *jwtmng.Mng, c *AuthConf) *Auth {
 	return &Auth{TokenManager: tm, config: *c}
 }
 
-func (a *Auth) AddRoutes(r *gin.Engine) {
+func (a *Auth) Register(r *gin.Engine) {
 	authorized := r.Group("/", gin.BasicAuth(a.config.Users))
 	authorized.GET("/login", a.loginHandler)
 	r.GET("/logout", a.logoutHandler)

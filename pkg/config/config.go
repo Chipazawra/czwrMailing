@@ -73,7 +73,7 @@ func parseFlags() (string, error) {
 	return configPath, nil
 }
 
-func LoadConf() (*Config, error) {
+func Load() (*Config, error) {
 
 	cfgPath, err := parseFlags()
 	if err != nil {
