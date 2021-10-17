@@ -1,0 +1,13 @@
+server:
+  host: 127.0.0.1
+  port: 8080
+  log: true
+  logtofile: false
+  logpath: .
+authconf:
+  users:
+   usr: pass
+   user1: pass1
+  jwtttl: 60
+  refreshttl: 3600
+  secret: 1488 

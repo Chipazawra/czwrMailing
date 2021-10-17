@@ -1,2 +1,4 @@
 .vscode
 log.txt
+*.pem
+secret/
