@@ -1,14 +1,14 @@
 BINARY_NAME=czwrMailing
 
 swag:
-	swag init -d .\internal\app\ -o .\doc\ -g app.go --parseDependency
+ swag init -d .\internal\app\ -o .\doc\ -g app.go --parseDependency
 
 build:
-	go build -o bin\${BINARY_NAME}.exe .\cmd\app\main.go
+ go build -o bin\${BINARY_NAME}.exe .\cmd\app\main.go
 run:
-	bin\${BINARY_NAME}.exe -config .\bin\config.yml
+ bin\${BINARY_NAME}.exe -config .\bin\config.yml
 
 build_and_run: swag build run
 
 build_docker: swag
-	docker build --tag czwr-mailing .
+ docker build --tag czwr-mailing .
