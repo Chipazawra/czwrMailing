@@ -13,10 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: golangci-lint
+      - name: lint
         uses: golangci/golangci-lint-action@v2
         with:
           version: v1.29
+      
+      - name: test
+        run: go test .\internal\dbcontext\inmemoryctx\ -v
+
   build:
       name: build
       runs-on: ubuntu-latest
@@ -24,13 +28,7 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - name: check docker
-          run: docker version 
-       
-        - name: ls -a
-          run: ls -a
-
-        - name: cat MakeFile
-          run: cat MakeFile   
+          run: docker version
 
         - name: build docker file 
           run: docker build --tag czwr-mailing .
