@@ -22,10 +22,14 @@ jobs:
       runs-on: ubuntu-latest
       needs: golangci
       steps:
+        - uses: actions/checkout@v2
         - name: check docker
           run: docker version 
-        
-        - uses: actions/checkout@v2
+       
+        - name: ls -a
+          run: ls -a
+
+
         - name: build docker file 
           run: make build_docker
 
