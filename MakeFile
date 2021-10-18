@@ -1,5 +1,8 @@
 BINARY_NAME=czwrMailing
 
+test:
+	go test .\internal\dbcontext\inmemoryctx\ -v
+
 swag:
 	swag init -d .\internal\app\ -o .\doc\ -g app.go --parseDependency
 
@@ -8,7 +11,7 @@ build:
 run:
 	bin\${BINARY_NAME}.exe -config .\bin\config.yml
 
-build_and_run: swag build run
+build_and_run: test swag build run
 
-build_docker: swag
+build_docker: test swag
 	docker build --tag czwr-mailing .
