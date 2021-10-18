@@ -19,7 +19,7 @@ jobs:
           version: v1.29
       
       - name: test
-        run: go test .\internal\dbcontext\inmemoryctx\ -v
+        run: go test ./internal/dbcontext/inmemoryctx/ -v
 
   build:
       name: build
