@@ -162,7 +162,7 @@ var SwaggerInfo = swaggerInfo{
 	BasePath:    "",
 	Schemes:     []string{},
 	Title:       "czwrMailing service",
-	Description: "This is a sample server celler server.",
+	Description: "This is a sample mailing servivce.",
 }
 
 type s struct{}

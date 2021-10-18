@@ -1,6 +1,6 @@
 info:
   contact: {}
-  description: This is a sample server celler server.
+  description: This is a sample mailing servivce.
   title: czwrMailing service
   version: "1.0"
 paths:
