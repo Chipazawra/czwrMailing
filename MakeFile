@@ -2,6 +2,7 @@ BINARY_NAME=czwrMailing
 
 test:
 	go test ./internal/dbcontext/inmemoryctx/ -v
+	go test ./internal/services/receivers/ -v
 
 swag:
 	swag init -d ./internal/app/ -o ./doc/ -g app.go --parseDependency
