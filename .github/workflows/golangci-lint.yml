@@ -33,5 +33,5 @@ jobs:
           run: cat MakeFile   
 
         - name: build docker file 
-          run: make build_docker
+          run: docker build --tag czwr-mailing .
 
