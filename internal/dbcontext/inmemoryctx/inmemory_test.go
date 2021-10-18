@@ -29,23 +29,31 @@ func TestDelete(t *testing.T) {
 
 	ctx := New()
 	idx, _ := ctx.Create("foo", "bar")
-	ctx.Delete("foo", idx)
+	err := ctx.Delete("foo", idx)
+
+	if err != nil {
+		t.Fatal(err)
+	}
 }
 
 func TestUpdate(t *testing.T) {
 
 	ctx := New()
 	idx, _ := ctx.Create("foo", "bar")
-	ctx.Update("foo", idx, "bar1")
+	err := ctx.Update("foo", idx, "bar1")
+	if err != nil {
+		t.Fatal(err)
+	}
 
 }
 
 func TestRead(t *testing.T) {
 
 	ctx := New()
-	ctx.Create("foo", "bar")
-	ctx.Create("foo", "bar1")
-	ctx.Create("foo", "bar2")
+	_, err := ctx.Create("foo", "bar")
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	receiversList, _ := ctx.Read("foo")
 
