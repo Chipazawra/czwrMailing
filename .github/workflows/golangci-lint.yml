@@ -29,6 +29,8 @@ jobs:
         - name: ls -a
           run: ls -a
 
+        - name: cat Makefile
+          run: cat Makefile   
 
         - name: build docker file 
           run: make build_docker
