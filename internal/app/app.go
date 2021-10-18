@@ -6,14 +6,16 @@ import (
 	"time"
 
 	_ "github.com/Chipazawra/czwrmailing/doc"
+	"github.com/Chipazawra/czwrmailing/internal/dbcontext/inmemoryctx"
 	"github.com/Chipazawra/czwrmailing/internal/services/auth"
 	"github.com/Chipazawra/czwrmailing/internal/services/profile"
+	"github.com/Chipazawra/czwrmailing/internal/services/receivers"
 	"github.com/Chipazawra/czwrmailing/internal/todo"
 	"github.com/Chipazawra/czwrmailing/pkg/config"
 	"github.com/Chipazawra/czwrmailing/pkg/jwtmng"
 	"github.com/Chipazawra/czwrmailing/pkg/pprofwrapper"
 	"github.com/gin-gonic/gin"
-	"github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
 )
 
@@ -79,17 +81,22 @@ func Run() {
 			panic(err)
 		}
 
+		//init db context
+		db := inmemoryctx.New()
+
 		//init services
 		as := auth.New(tm, &conf.AuthConf)
 		ps := profile.New(tm)
 		ts := todo.New(nil)
 		pw := pprofwrapper.New()
+		rc := receivers.New(db)
 
 		//register services
 		as.Register(g)
 		ps.Register(g)
 		ts.Register(g)
 		pw.Register(g)
+		rc.Register(g)
 
 		//swagger
 		g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
