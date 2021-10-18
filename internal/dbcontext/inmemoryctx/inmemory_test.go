@@ -1,6 +1,7 @@
 package inmemoryctx
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -14,54 +15,40 @@ func TestNew(t *testing.T) {
 
 }
 
-func TestCreateList(t *testing.T) {
+func TestCreate(t *testing.T) {
 
 	ctx := New()
-
-	err := ctx.CreateList("foo")
-
+	_, err := ctx.Create("foo", "bar")
 	if err != nil {
 		t.Fatalf("Expected nil value in err, val = %v", err)
 	}
 
-	err = ctx.CreateList("foo")
+}
 
-	if err == nil {
-		t.Fatalf("Expected err 'There is already a receivers list for user %v ', val = %v", "foo", err)
-	}
+func TestDelete(t *testing.T) {
+
+	ctx := New()
+	idx, _ := ctx.Create("foo", "bar")
+	ctx.Delete("foo", idx)
+}
+
+func TestUpdate(t *testing.T) {
+
+	ctx := New()
+	idx, _ := ctx.Create("foo", "bar")
+	ctx.Update("foo", idx, "bar1")
 
 }
 
-func TestDeleteList(t *testing.T) {
+func TestRead(t *testing.T) {
 
 	ctx := New()
+	ctx.Create("foo", "bar")
+	ctx.Create("foo", "bar1")
+	ctx.Create("foo", "bar2")
 
-	err := ctx.CreateList("foo")
+	receiversList, _ := ctx.Read("foo")
 
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	err = ctx.DeleteList("foo")
-
-	if err != nil {
-		t.Fatal(err)
-	}
-
-}
-
-func TestAddToList(t *testing.T) {
-
-	ctx := New()
-
-	err := ctx.CreateList("foo")
-
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	ctx.AddToList("foo", "bar1")
-	ctx.AddToList("foo", "bar2")
-	ctx.AddToList("foo", "bar3")
+	fmt.Printf("%v\n", receiversList)
 
 }
