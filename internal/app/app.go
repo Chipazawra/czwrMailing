@@ -10,6 +10,7 @@ import (
 	"github.com/Chipazawra/czwrmailing/internal/services/auth"
 	"github.com/Chipazawra/czwrmailing/internal/services/profile"
 	"github.com/Chipazawra/czwrmailing/internal/services/receivers"
+	"github.com/Chipazawra/czwrmailing/internal/services/templates"
 	"github.com/Chipazawra/czwrmailing/internal/todo"
 	"github.com/Chipazawra/czwrmailing/pkg/config"
 	"github.com/Chipazawra/czwrmailing/pkg/jwtmng"
@@ -90,6 +91,7 @@ func Run() {
 		ts := todo.New(nil)
 		pw := pprofwrapper.New()
 		rc := receivers.New(db)
+		tp := templates.New()
 
 		//register services
 		as.Register(g)
@@ -97,6 +99,7 @@ func Run() {
 		ts.Register(g)
 		pw.Register(g)
 		rc.Register(g)
+		tp.Register(g)
 
 		//swagger
 		g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

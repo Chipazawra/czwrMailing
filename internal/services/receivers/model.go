@@ -3,8 +3,8 @@ package receivers
 type IDBctx interface {
 	Create(usr, receiver string) (uint, error)
 	Read(usr string) ([]string, error)
-	Update(usr string, idx uint, receiver string) error
-	Delete(usr string, idx uint) error
+	Update(usr string, id uint, receiver string) error
+	Delete(usr string, id uint) error
 }
 
 type Receivers struct {
@@ -17,11 +17,11 @@ func New(dbctx IDBctx) *Receivers {
 
 func (r *Receivers) Create(usr, receiver string) (uint, error) {
 
-	idx, err := r.dbctx.Create(usr, receiver)
+	id, err := r.dbctx.Create(usr, receiver)
 	if err != nil {
 		return 0, err
 	}
-	return idx, nil
+	return id, nil
 
 }
 
@@ -35,9 +35,9 @@ func (r *Receivers) Read(usr string) ([]string, error) {
 
 }
 
-func (r *Receivers) Update(usr string, idx uint, receiver string) error {
+func (r *Receivers) Update(usr string, id uint, receiver string) error {
 
-	err := r.dbctx.Update(usr, idx, receiver)
+	err := r.dbctx.Update(usr, id, receiver)
 	if err != nil {
 		return err
 	}
@@ -45,12 +45,11 @@ func (r *Receivers) Update(usr string, idx uint, receiver string) error {
 
 }
 
-func (r *Receivers) Delete(usr string, idx uint) error {
+func (r *Receivers) Delete(usr string, id uint) error {
 
-	err := r.dbctx.Delete(usr, idx)
+	err := r.dbctx.Delete(usr, id)
 	if err != nil {
 		return err
 	}
-	return err
-
+	return nil
 }
