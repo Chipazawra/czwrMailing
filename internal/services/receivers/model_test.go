@@ -39,12 +39,11 @@ func TestUpdate(t *testing.T) {
 	r := New(inmemoryctx.New())
 
 	err := r.Update("usr", 0, "res1")
-
 	if err.Error() != "There is no receiver list for user usr" {
 		t.Fatalf("r.Update(\"usr\", 0, \"res1\") = %v, want 'There is no receiver list for user usr'", err)
 	}
 
-	r.Create("usr", "res1")
+	_, err = r.Create("usr", "res1")
 	if err != nil {
 		t.Fatalf("%v", err)
 	}
