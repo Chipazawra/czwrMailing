@@ -35,7 +35,6 @@ func TestDelete(t *testing.T) {
 	}
 
 	err = ctx.Delete("foo", idx)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -45,7 +44,6 @@ func TestUpdate(t *testing.T) {
 
 	ctx := New()
 	idx, err := ctx.Create("foo", "bar")
-
 	if err != nil {
 		t.Fatal(err)
 	}

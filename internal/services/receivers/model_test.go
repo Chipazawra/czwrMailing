@@ -45,9 +45,11 @@ func TestUpdate(t *testing.T) {
 	}
 
 	r.Create("usr", "res1")
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
 
 	err = r.Update("usr", 0, "res2")
-
 	if err != nil {
 		t.Fatalf("r.Update(\"usr\", 0, \"res2\")=%v, want <nil>", err)
 	}
@@ -64,10 +66,12 @@ func TestDelete(t *testing.T) {
 		t.Fatalf("r.Delete(\"usr\", 1) = %v, want 'There is no receiver list for user usr'", err)
 	}
 
-	r.Create("usr", "res1")
+	_, err = r.Create("usr", "res1")
+	if err != nil {
+		t.Fatalf("%v", err)
+	}
 
 	err = r.Delete("usr", 1)
-
 	if err.Error() != "There is no receiver with index 1" {
 		t.Fatalf("r.Delete(\"usr\", 1) = %v, want 'There is no receiver with index 1'", err)
 	}
