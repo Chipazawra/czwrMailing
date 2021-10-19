@@ -19,7 +19,7 @@ func (t *Templates) Register(g *gin.Engine) {
 	g.POST("/upload_template", t.uploadTemplateHandler)
 }
 
-func (r *Templates) uploadTemplateHandler(c *gin.Context) {
+func (t *Templates) uploadTemplateHandler(c *gin.Context) {
 
 	raw, err := c.GetRawData()
 
@@ -41,7 +41,7 @@ func (r *Templates) uploadTemplateHandler(c *gin.Context) {
 		return
 	}
 
-	rx, _ := regexp.Compile("{{ \\.(.*?)}}")
+	rx, _ := regexp.Compile(`{{ \.(.*?)}}`)
 	as := rx.FindAllStringSubmatch(string(raw), -1)
 	c.JSON(http.StatusOK, as)
 
