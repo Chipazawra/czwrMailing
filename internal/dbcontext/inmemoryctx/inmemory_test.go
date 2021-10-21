@@ -28,9 +28,13 @@ func TestCreate(t *testing.T) {
 func TestDelete(t *testing.T) {
 
 	ctx := New()
-	idx, _ := ctx.Create("foo", "bar")
-	err := ctx.Delete("foo", idx)
 
+	idx, err := ctx.Create("foo", "bar")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = ctx.Delete("foo", idx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -39,8 +43,12 @@ func TestDelete(t *testing.T) {
 func TestUpdate(t *testing.T) {
 
 	ctx := New()
-	idx, _ := ctx.Create("foo", "bar")
-	err := ctx.Update("foo", idx, "bar1")
+	idx, err := ctx.Create("foo", "bar")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = ctx.Update("foo", idx, "bar1")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -51,6 +59,7 @@ func TestRead(t *testing.T) {
 
 	ctx := New()
 	_, err := ctx.Create("foo", "bar")
+
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -19,34 +19,34 @@ func (c *ctx) Create(usr, receiver string) (uint, error) {
 	return uint(len(c.receiversList[usr]) - 1), nil
 }
 
-func (c *ctx) Delete(usr string, idx uint) error {
+func (c *ctx) Delete(usr string, id uint) error {
 
 	if _, exist := c.receiversList[usr]; !exist {
 		return fmt.Errorf("There is no receiver list for user %v", usr)
-	} else if int(idx) > cap(c.receiversList[usr])-1 {
-		return fmt.Errorf("There is no receiver with index %v", idx)
+	} else if int(id) > cap(c.receiversList[usr])-1 {
+		return fmt.Errorf("There is no receiver with index %v", id)
 	}
 
-	copy(c.receiversList[usr][idx:], c.receiversList[usr][idx+1:])
+	copy(c.receiversList[usr][id:], c.receiversList[usr][id+1:])
 	c.receiversList[usr][len(c.receiversList[usr])-1] = ""
 	c.receiversList[usr] = c.receiversList[usr][:len(c.receiversList[usr])-1]
 
 	return nil
 }
 
-func (c *ctx) Update(usr string, idx uint, receiver string) error {
+func (c *ctx) Update(usr string, id uint, receiver string) error {
 
 	if _, exist := c.receiversList[usr]; exist {
 
-		if int(idx) > cap(c.receiversList[usr])-1 {
-			return fmt.Errorf("There is no receiver with index %v", idx)
+		if int(id) > cap(c.receiversList[usr])-1 {
+			return fmt.Errorf("There is no receiver with index %v", id)
 		}
 
 	} else {
 		return fmt.Errorf("There is no receiver list for user %v", usr)
 	}
 
-	c.receiversList[usr][idx] = receiver
+	c.receiversList[usr][id] = receiver
 
 	return nil
 }

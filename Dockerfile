@@ -3,12 +3,9 @@ FROM golang:1.17.1-alpine
 
 WORKDIR $GOPATH/src/czwrMailing/
 
-COPY go.mod ./
-COPY go.sum ./
+COPY . .
 
 RUN go mod download
-
-COPY . .
 
 RUN go build -o ./bin/czwrMailing ./cmd/app/main.go
 
